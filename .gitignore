@@ -1,0 +1,44 @@
+# ── Models, data, runs: NEVER commit these ────────────────────────────────────
+# Weights and corpora live outside the repo by design. Keeping them out is also
+# what stops patient-derived material reaching a remote.
+*.gguf
+*.safetensors
+*.bin
+*.pt
+*.ckpt
+*.jsonl
+*.sqlite3
+*.db
+*.db-shm
+*.db-wal
+data/
+runs/
+models/
+checkpoints/
+distill_data/
+distill_runs/
+gguf*/
+
+# ── Secrets ───────────────────────────────────────────────────────────────────
+.env
+*.key
+*.pem
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+.Python
+venv/
+.venv/
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# ── Editors / OS ──────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+.DS_Store

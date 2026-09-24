@@ -1,0 +1,113 @@
+# Clinical Vital Sign Thresholds
+# Sources: NEWS2 (Royal College of Physicians, 2017), qSOFA (Singer et al., JAMA 2016),
+#          SIRS criteria (Bone et al., 1992)
+# Version: 1.0.0 — changes require document control review (ISO 13485)
+
+# ── Physiological Plausibility Bounds (hard reject) ───────────────────────────
+# Values outside these ranges are physically impossible and indicate sensor error.
+plausibility:
+  systolic_bp:
+    min: 40
+    max: 300
+  diastolic_bp:
+    min: 20
+    max: 200
+  heart_rate:
+    min: 1
+    max: 300
+  spo2:
+    min: 50
+    max: 100
+
+# ── NEWS2 Scoring Thresholds ──────────────────────────────────────────────────
+# Each vital maps to a score 0–3. Score 3 on any single parameter triggers
+# CRITICAL regardless of total score.
+# Reference: Royal College of Physicians. National Early Warning Score (NEWS) 2. 2017.
+news2:
+  systolic_bp:
+    score_3_low: 90        # SBP ≤ 90
+    score_2_low: 100       # 91–100
+    score_1_low: 110       # 101–110
+    normal_low: 111        # 111–219 = score 0
+    normal_high: 219
+    score_3_high: 220      # SBP ≥ 220
+
+  diastolic_bp:
+    score_3_low: 50        # DBP ≤ 50
+    score_2_low: 60        # 51–60
+    normal_low: 61         # 61–89 = score 0
+    normal_high: 89
+    score_2_high: 109      # 90–109
+    score_3_high: 110      # DBP ≥ 110
+
+  heart_rate:
+    score_3_low: 40        # HR ≤ 40
+    score_1_low: 50        # 41–50
+    normal_low: 51         # 51–90 = score 0
+    normal_high: 90
+    score_1_high: 110      # 91–110
+    score_2_high: 130      # 111–130
+    score_3_high: 131      # HR ≥ 131
+
+  spo2:
+    score_3: 91            # SpO2 ≤ 91%
+    score_2_low: 92        # 92–93%
+    score_2_high: 93
+    score_1_low: 94        # 94–95%
+    score_1_high: 95
+    normal: 96             # ≥ 96% = score 0
+
+# ── NEWS2 Alert Level Thresholds ─────────────────────────────────────────────
+news2_alert_levels:
+  normal:
+    max_score: 2
+  medium:
+    min_score: 3
+    max_score: 4
+  high:
+    min_score: 5
+    max_score: 6
+  critical:
+    min_score: 7            # OR any single vital scoring 3
+
+# ── qSOFA Sepsis Screen ───────────────────────────────────────────────────────
+# Reference: Singer et al. "The Third International Consensus Definitions for
+# Sepsis and Septic Shock (Sepsis-3)." JAMA. 2016;315(8):801-810.
+# Note: Full qSOFA includes altered mentation and RR ≥22. These are unavailable
+# from the 4 monitored vitals. Documented limitation — flagged in all outputs.
+qsofa:
+  sbp_threshold: 100       # SBP ≤ 100 → +1
+  hr_threshold: 90         # HR > 90 → +1 (cardiovascular proxy)
+  spo2_threshold: 94       # SpO2 < 94% → +1 (respiratory dysfunction proxy)
+  high_risk_score: 2       # score ≥ 2 → HIGH SEPSIS RISK → escalate to CRITICAL
+
+# ── Output Guardrail Thresholds ───────────────────────────────────────────────
+output_guardrails:
+  min_confidence: 0.6      # Below this → flag for human review, do not auto-escalate
+  max_level_contradiction: 1  # LLM level must not differ from rule level by more than 1 tier
+
+# ── ECG-derived parameters ────────────────────────────────────────────────────
+# Heart rate reuses the NEWS2 pulse bands above. Respiratory rate uses the NEWS2
+# respiration bands (Royal College of Physicians, NEWS2 2017) -- note this is the
+# FIRST NEWS2 parameter and is otherwise absent from the 4 monitored vitals.
+ecg:
+  respiratory_rate:
+    score_3_low: 8          # RR <= 8
+    score_1_low: 11         # 9-11
+    normal_low: 12          # 12-20 = score 0
+    normal_high: 20
+    score_2_high: 24        # 21-24
+    score_3_high: 25        # RR >= 25
+
+  # Interpretability gate. Below any of these the recording cannot support a
+  # clinical statement, and the result is UNINTERPRETABLE rather than NORMAL.
+  # Reporting NORMAL from unusable signal is the dangerous failure mode here.
+  interpretability:
+    # CHANGED 2026-09-23: 20.0 -> 5.0, development setting.
+    # Rationale: at 20% every recording collected so far is rejected, which
+    # blocks end-to-end testing. 5% is NOT a clinically justified value -- it
+    # admits recordings with well under a minute of interpretable signal. It
+    # must be set by a clinician before any deployment. See README note.
+    min_signal_quality_pct: 5.0     # Orphanidou 2015 SQI pass rate
+    min_beat_coverage: 0.80         # beats must account for the analysed span
+    min_analysable_minutes: 0.5

@@ -1,0 +1,9 @@
+# Additional packages needed only to GENERATE data and TRAIN.
+# Requires a CUDA-capable GPU (~8 GB for the MedGemma-4B teacher).
+-r requirements.txt
+torch>=2.0
+transformers>=4.40
+peft>=0.10
+accelerate>=0.30
+datasets>=2.0
+safetensors>=0.4

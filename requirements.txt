@@ -1,0 +1,7 @@
+# Runtime for the distillation pipeline and evaluation harness.
+# Inference itself needs NO Python -- llama-server is a standalone C++ binary.
+pydantic>=2.0
+pydantic-settings>=2.0
+PyYAML>=6.0
+httpx>=0.24
+numpy>=1.24
