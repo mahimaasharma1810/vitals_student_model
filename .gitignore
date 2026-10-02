@@ -42,3 +42,8 @@ dist/
 .vscode/
 .idea/
 .DS_Store
+
+# ── Exceptions: what is needed to test the shipped model ──────────────────────
+# Shipped student GGUF (Git LFS) and the synthetic eval fixture (vitals only).
+!model/vitals-v3-Q5_K_M.gguf
+!tests/fixtures/*.jsonl

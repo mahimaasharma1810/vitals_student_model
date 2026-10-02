@@ -170,7 +170,31 @@ hard cases into a 3.6% "pass" by adding 200 easy rows to the denominator.
 
 ---
 
+## Testing the model
+
+Everything needed to test the shipped student is in the repo:
+
+| What | Where |
+|---|---|
+| Shipped GGUF (Git LFS, 401 MB) | `model/vitals-v3-Q5_K_M.gguf` |
+| Gate eval cases (synthetic vitals only) | `tests/fixtures/vitals_v3_eval.jsonl` |
+| Reference results | `docs/results/` |
+
+You also need a `llama-server` binary from [llama.cpp](https://github.com/ggml-org/llama.cpp).
+
+```bash
+git lfs pull                                   # fetch the GGUF
+LLAMA_SERVER=/path/to/llama-server scripts/serve_student.sh   # serves on :8099
+pip install -r requirements.txt
+python distill/test_student.py smoke           # one request
+python distill/test_student.py gates           # full pass/fail suite
+python distill/benchmark_student.py --n 20     # latency / quality benchmark
+pytest tests                                   # guardrail unit tests (no model needed)
+```
+
+See `docs/MODELS.md` for checksums and the other builds.
+
 ## Not included
 
-No model weights, no training corpora, no patient data. All are excluded by
-`.gitignore`. Weights are distributed separately.
+No training corpora, no patient data, and no weights other than the shipped
+GGUF above. Everything else is excluded by `.gitignore`.

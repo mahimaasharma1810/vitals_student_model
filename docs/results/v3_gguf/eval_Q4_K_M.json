@@ -1,0 +1,126 @@
+{
+  "url": "http://127.0.0.1:8099",
+  "gates": {
+    "json_valid_pct": 100.0,
+    "tier_agreement_pct": 100.0,
+    "action_agreement_pct": 100.0,
+    "no_fabrication_pct": 100.0,
+    "no_prohibited_pct": 100.0
+  },
+  "gated_sets": [
+    "held_out",
+    "boundary",
+    "indist"
+  ],
+  "overall_pass": false,
+  "seconds": 3444,
+  "report": {
+    "held_out": {
+      "metrics": {
+        "n": 103,
+        "json_valid_pct": 100.0,
+        "tier_agreement_pct": 100.0,
+        "action_agreement_pct": 98.06,
+        "no_fabrication_pct": 100.0,
+        "no_prohibited_pct": 100.0,
+        "fully_clean_pct": 98.06,
+        "fallback_pct": 0.0
+      },
+      "gated": true,
+      "passed": false,
+      "failures": [
+        {
+          "ok": false,
+          "reasons": [
+            "action_mismatch:urgent_review!=clinician_review"
+          ],
+          "notes": [],
+          "case": [
+            147,
+            57,
+            65,
+            95
+          ],
+          "tier": "MEDIUM",
+          "model_tier": "MEDIUM"
+        },
+        {
+          "ok": false,
+          "reasons": [
+            "action_mismatch:urgent_review!=clinician_review"
+          ],
+          "notes": [],
+          "case": [
+            143,
+            59,
+            57,
+            95
+          ],
+          "tier": "MEDIUM",
+          "model_tier": "MEDIUM"
+        }
+      ]
+    },
+    "boundary": {
+      "metrics": {
+        "n": 45,
+        "json_valid_pct": 100.0,
+        "tier_agreement_pct": 100.0,
+        "action_agreement_pct": 100.0,
+        "no_fabrication_pct": 100.0,
+        "no_prohibited_pct": 100.0,
+        "fully_clean_pct": 100.0,
+        "fallback_pct": 0.0
+      },
+      "gated": true,
+      "passed": true,
+      "failures": []
+    },
+    "indist": {
+      "metrics": {
+        "n": 40,
+        "json_valid_pct": 100.0,
+        "tier_agreement_pct": 100.0,
+        "action_agreement_pct": 97.5,
+        "no_fabrication_pct": 100.0,
+        "no_prohibited_pct": 100.0,
+        "fully_clean_pct": 97.5,
+        "fallback_pct": 0.0
+      },
+      "gated": true,
+      "passed": false,
+      "failures": [
+        {
+          "ok": false,
+          "reasons": [
+            "action_mismatch:urgent_review!=clinician_review"
+          ],
+          "notes": [],
+          "case": [
+            155,
+            93,
+            62,
+            94
+          ],
+          "tier": "MEDIUM",
+          "model_tier": "MEDIUM"
+        }
+      ]
+    },
+    "robustness": {
+      "metrics": {
+        "n": 8,
+        "json_valid_pct": 100.0,
+        "tier_agreement_pct": 100.0,
+        "action_agreement_pct": 100.0,
+        "no_fabrication_pct": 100.0,
+        "no_prohibited_pct": 100.0,
+        "fully_clean_pct": 100.0,
+        "fallback_pct": 0.0
+      },
+      "gated": false,
+      "passed": null,
+      "failures": []
+    }
+  }
+}

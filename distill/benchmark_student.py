@@ -132,7 +132,7 @@ def main():
     ap.add_argument("--max-tokens", type=int, default=500)
     ap.add_argument("--timeout", type=float, default=600.0)
     ap.add_argument("--seed", type=int, default=20260924)
-    ap.add_argument("--out", default="/ssd_scratch/mahimakopalley/gguf_v3/benchmark_v3.json")
+    ap.add_argument("--out", default="/tmp/benchmark_student.json")
     ap.add_argument("--balanced", action="store_true",
                     help="equal cases per tier. Random draws are ~71% CRITICAL, and "
                          "CRITICAL bypasses the LLM in production, so an unbalanced "

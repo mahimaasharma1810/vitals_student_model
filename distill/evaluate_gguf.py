@@ -40,7 +40,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--url", default="http://127.0.0.1:8099")
     ap.add_argument("--model", default="gguf")
-    ap.add_argument("--data", default="/ssd_scratch/mahimakopalley/distill_data/vitals_v3/accepted.jsonl")
+    ap.add_argument("--data", default=str(Path(__file__).resolve().parents[1] / "tests/fixtures/vitals_v3_eval.jsonl"))
     ap.add_argument("--out", required=True)
     ap.add_argument("--indist-n", type=int, default=60)
     ap.add_argument("--timeout", type=float, default=300.0)
